@@ -1,7 +1,6 @@
 package listofbusiness
 
 import grails.validation.ValidationException
-import org.apache.catalina.util.ParameterMap
 import org.springframework.web.multipart.MultipartFile
 
 import static org.springframework.http.HttpStatus.*
@@ -119,8 +118,7 @@ class BusinessController {
             return
         }
         while (business.longitude.length()==0||business.latitude==0)
-            filAndSave(business)
-
+            geocodeService.fillInLatLong(business)
             try {
                 businessService.save(business)
             } catch (ValidationException e) {
@@ -162,7 +160,6 @@ class BusinessController {
             '*'{ render status: NOT_FOUND }
         }
     }
-
 
     @Override
     String toString() {

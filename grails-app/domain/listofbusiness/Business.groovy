@@ -9,10 +9,10 @@ class Business implements Serializable,Comparable{
     String longitude
 
     static constraints = {
-        name(size: 1..50, unique: true)
+        name(size: 2..50, unique: true)
         email(email: true, size: 5..50)
-        street( size: 1..50)
-        zip(blank: true,nullable: true, size: 1..50)
+        street( size: 3..50)
+        zip(blank: true,nullable: true, size: 4..50)
         latitude(display:false, blank: true,nullable: true)
         longitude(display:false, blank: true, nullable: true)
     }
