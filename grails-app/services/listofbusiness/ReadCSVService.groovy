@@ -18,8 +18,6 @@ class ReadCSVService {
             bList<<b
         }
         bList.remove(0)
-
-
         return bList
     }
 }

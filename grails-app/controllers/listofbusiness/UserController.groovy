@@ -15,7 +15,7 @@ class UserController {
 
     def authenticate = {
         def user =
-                User.findByLoginAndPassword(params.login, params.password.encodeAsSHA256().toString())
+                User.findByLoginAndPassword(params.login, params.password.encodeAsSHA256() as String)
         if(user){
             session.setAttribute('user',user)
             session.user = user
@@ -49,11 +49,10 @@ class UserController {
     }
 
     def save(User user) {
-        if (user == null) {
+        if (!user) {
             notFound()
             return
         }
-
         try {
             userService.save(user)
         } catch (ValidationException e) {
@@ -64,7 +63,7 @@ class UserController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id]) as Object
-                redirect user
+                redirect (action: 'show', id: user.id)
             }
             '*' { respond user, [status: CREATED] }
         }
